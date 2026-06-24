@@ -1,16 +1,20 @@
 {% extends 'layout.html' %}
+
 {% block content %}
+  <h2>Welcome to BlogSpace</h2>
+  <p>A place where stories, experiences, ideas, and knowledge come together. Share your journey, inspire others, and discover perspectives from people around the world.</p>
   {% for post in posts.items %}
-    <!--         the learing why watching video is importent for learning flask and python
+    <!--          the learing why watching video is importent for learning flask and python
         <h1>{{post.title}}</h1>
         <p>By {{post.author}} on {{post.date_posted}}</p>
         <p>{{post.content}}</p>
-            -->
+             -->
+
     <article class="media content-section">
       <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image) }}" />
       <div class="media-body">
         <div class="article-metadata">
-          <a class="mr-2" href="{{ url_for('users.user_posts',username=post.author.username)}}">{{ post.author.username }}</a>
+          <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
           <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
         </div>
         <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
@@ -30,4 +34,3 @@
     {% endif %}
   {% endfor %}
 {% endblock %}
-
