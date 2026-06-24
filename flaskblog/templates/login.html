@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <div class="content-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}<!-- This is used to include a hidden field in the form that contains a CSRF token. This token is used to protect against Cross-Site Request Forgery (CSRF) attacks. When the form is submitted, the server will check this token to ensure that the request is coming from a trusted source. -->
+      <fieldset class="form-group">
+        <Legend class="border-bottom mb-4">Log In</Legend>
+
+        <div class="form-group">
+          {{ form.email.label(class='form-control-label') }}
+          {% if form.email.errors %}
+            <!-- This code checks if there are any validation errors associated with the email field in the form. If there are errors, it will display them inside a div with the class "alert alert-danger". Each error message will be displayed as a separate paragraph within that div. -->
+            {{ form.email(class='form-control form-control-lg is-invalid') }}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.email(class='form-control form-control-lg') }}
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.password.label(class='form-control-label') }}
+          {% if form.password.errors %}
+            <!-- This code checks if there are any validation errors associated with the password field in the form. If there are errors, it will display them inside a div with the class "alert alert-danger". Each error message will be displayed as a separate paragraph within that div. -->
+            {{ form.password(class='form-control form-control-lg is-invalid') }}
+            <div class="invalid-feedback">
+              {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.password(class='form-control form-control-lg') }}
+          {% endif %}
+        </div>
+
+        <div class="form-group ml-4">{{ form.remember(class='form-check-input') }}
+          {{ form.remember.label(class='form-check-label') }}</div>
+      </fieldset>
+      <div class="form-group">{{ form.submit(class='btn btn-outline-info') }}
+
+      <small class="text-muted ml-4"><a href="{{ url_for('users.reset_request') }}">Forgot Password?</a></small>
+        </div>
+      <div>
+        <small class="text-muted">Don't Have An Account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a></small>
+      </div>
+    </form>
+    
+  </div>
+{% endblock %}

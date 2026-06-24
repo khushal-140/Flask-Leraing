@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+      <div class="content-section">
+        <form method= "POST" action="">
+            {{ form.hidden_tag() }}<!-- This is used to include a hidden field in the form that contains a CSRF token. This token is used to protect against Cross-Site Request Forgery (CSRF) attacks. When the form is submitted, the server will check this token to ensure that the request is coming from a trusted source. -->
+            <fieldset class="form-group">
+                <Legend class="border-bottom mb-4">{{ legend }}</Legend>
+
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label")}}
+                    {% if form.title.errors %} <!-- This code checks if there are any validation errors associated with the title field in the form. If there are errors, it will display them inside a div with the class "alert alert-danger". Each error message will be displayed as a separate paragraph within that div. -->
+                            {{ form.title(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    <span>{{ error }}</span>
+                                    
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control form-control-lg")}}
+                        {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.content.label(class="form-control-label")}}
+                    {% if form.content.errors %} <!-- This code checks if there are any validation errors associated with the content field in the form. If there are errors, it will display them inside a div with the class "alert alert-danger". Each error message will be displayed as a separate paragraph within that div. -->
+                            {{ form.content(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.content.errors %}
+                                    <span>{{ error }}</span>
+                                    
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.content(class="form-control form-control-lg")}}
+                        {% endif %}
+                </div>
+
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info")}}
+            </div>  
+            
+        </form>
+    </div>
+{% endblock content %}
+
+
+ 
+
