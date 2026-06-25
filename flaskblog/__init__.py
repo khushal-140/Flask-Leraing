@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail  import Mail
 from flaskblog.config import Config
+from flask_migrate import Migrate
 
 
 
@@ -13,7 +14,7 @@ bcrypt = Bcrypt()
 login_manager = LoginManager() # This initializes the LoginManager object with the Flask application, which is used to manage user authentication and session management in the application.
 login_manager.login_view = 'users.login' # This sets the login view for the LoginManager. It specifies that if a user tries to access a protected route without being authenticated, they will be redirected to the 'login' view (which is defined in the routes.py file).
 login_manager.login_message_category = 'info' # This sets the category for the flash message that
-
+migrate = Migrate()
 
 mail=Mail()
 
@@ -30,15 +31,19 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+    migrate.init_app(app, db)
     
     from flaskblog.users.routes import users
     from flaskblog.posts.routes import posts
     from flaskblog.main.routes import main
     from flaskblog.errors.handlers import errors
+    from flaskblog.admin import admin
     
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(admin)
+    
     
     return app

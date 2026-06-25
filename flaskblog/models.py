@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     image=db.Column(db.String(20), nullable=False, default='default.jpg')
     password=db.Column(db.String(60), nullable=False)
     posts=db.relationship('Post', backref='author', lazy=True) # This line defines a relationship between the User model and the Post model. It indicates that a user can have multiple posts. The backref parameter creates a virtual column in the Post model called 'author' that allows us to access the user who created a post. The lazy=True parameter means that the related posts will be loaded from the database only when they are accessed, rather than being loaded immediately when the user is queried.
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
     
     ''''
     @staticmethod
